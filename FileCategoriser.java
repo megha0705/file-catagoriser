@@ -28,15 +28,29 @@ String fileType = "undetermined";
                     + " due to following exception: "
                     + ioException); 
             } 
+          
             //destination folder path
-            File targetFolder = new File("c:/Users/Saptarshi/Downloads" + extension) ;
-            if(!targetFolder.exist()){
+         File targetFolder = new File("c:/Users/Saptarshi/OneDrive/Desktop/file-categoriser/" + extension) ;
+            if(!targetFolder.exists()){
                 targetFolder.mkdir();
+                System.out.println("new folder is created" + targetFolder.getAbsolutePath());
+            }else{
+                System.out.println("failed to craete new folder is" + targetFolder.getAbsolutePath());
+
             }
             //destination file path
              File targetFile = new File(targetFolder , fileName);
-            
-               System.out.println("the extension of the " + fileName + "is -> " + extension + "filetype is ->" + fileType);
+            try{
+                Files.move(filename.toPath() , targetFile.toPath());
+                System.out.println("files are succesfully moved to new folder" +  targetFile.getAbsolutePath());
+            }catch(IOException ioException){
+    System.out.println(  "Cannot move file  "
+                    + filename
+                    + " due to following exception: "
+                    + ioException); 
+            }
+              
+             
          }else{
               
             System.out.println("file does not exist");
@@ -52,7 +66,9 @@ String fileType = "undetermined";
 
     public static void main(String[] args){
        
-File[] files = new File("c:/Users/Saptarshi/Downloads").listFiles();
+
+
+File[] files = new File("c:/Users/Saptarshi/OneDrive/Desktop/file-categoriser").listFiles();
 categorisingFiles(files);
     }
 }
